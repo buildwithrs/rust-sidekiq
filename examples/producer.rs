@@ -18,8 +18,13 @@ async fn main() -> JobResult<()> {
         tokio::select! {
             _ = send_msg(&broker, idx) => {
                 println!("sended msg: {idx}");
+                if idx == 20 {
+                    break;
+                }
+
                 idx += 1;
                 sleep(Duration::from_millis(300)).await;
+
             }
             _ = ctrl_c() => {
                 println!("user canceled");
